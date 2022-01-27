@@ -1,35 +1,7 @@
 import {Box, Button, Text, TextField, Image} from '@skynexui/components';
+import React from 'react';
+import { useRouter } from 'next/router';
 import appConfig from '../config.json';
-
-function GlobalStyle() {
-    return (
-        <style global jsx>{`
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            list-style: none;
-        }
-
-        body {
-            font-family: 'Open-Sans', sans-serif;
-        }
-        /*App fit Height */
-        html, body, #__next {
-            min-height: 100vh;
-            display: flex;
-            flex: 1;
-        }
-        #__next {
-            flex: 1;
-        }
-        #__next > * {
-            flex: 1;
-        }
-        /* ./App fit Height */
-        `}</style>
-    );
-}
 
 function Title(props) {
     const Tag = props.tag;
@@ -38,7 +10,7 @@ function Title(props) {
             <Tag>{props.children}</Tag>
             <style jsx>{`
             ${Tag} {
-                color:${appConfig.theme.colors.neutrals[`000`]};
+                color:${appConfig.theme.colors.primary[300]};
                 font-size: 24px;
                 font-weight: 600;
             }
@@ -61,16 +33,16 @@ function Title(props) {
 //  export default HomePage
 
 export default function PaginaInicial() {
-    const username = 'JuninhoSouza25';
-  
+    //const username = 'JuninhoSouza25';
+  const [username, setUsername] = React.useState('JuninhoSouza25');
+  const roteamento = useRouter();
     return (
       <>
-        <GlobalStyle />
         <Box
           styleSheet={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            backgroundColor: appConfig.theme.colors.primary[500],
-            backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+            //backgroundColor: appConfig.theme.colors.neutrals[500],
+            backgroundImage: 'url(https://images.pexels.com/photos/2519374/pexels-photo-2519374.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260)', position: 'top',
             backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
           }}
         >
@@ -92,22 +64,46 @@ export default function PaginaInicial() {
             {/* Formulário */}
             <Box
               as="form"
+              onSubmit={function (event) {
+                  event.preventDefault()
+                  roteamento.push('./chat');
+              }}
               styleSheet={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
               }}
             >
-              <Title tag="h2">Boas vindas de volta!</Title>
-              <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+              <Title tag="h2">Biker Travel Chat</Title>
+              <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.primary[400] }}>
                 {appConfig.name}
               </Text>
+
+              {/*<input 
+                  type="text"
+                  value={username}
+                  onChange={function handler(event){
+                    //Onde ta o valor?
+                    const valor = event.target.value;
+                    // Trocar o valor da variavel
+                    //atraves do React e avise quem precisa
+                    setUsername(valor);
+                  }}
+                />*/}
   
               <TextField
+                value={username}
+                onChange={function handler(event){
+                  //Onde ta o valor?
+                  const valor = event.target.value;
+                  // Trocar o valor da variavel
+                  //atraves do React e avise quem precisa
+                  setUsername(valor);
+                }}
                 fullWidth
                 textFieldColors={{
                   neutral: {
-                    textColor: appConfig.theme.colors.neutrals[200],
-                    mainColor: appConfig.theme.colors.neutrals[900],
+                    textColor: appConfig.theme.colors.primary[200],
+                    mainColor: appConfig.theme.colors.primary[900],
                     mainColorHighlight: appConfig.theme.colors.primary[500],
                     backgroundColor: appConfig.theme.colors.neutrals[800],
                   },
@@ -138,7 +134,7 @@ export default function PaginaInicial() {
                 padding: '16px',
                 backgroundColor: appConfig.theme.colors.neutrals[800],
                 border: '1px solid',
-                borderColor: appConfig.theme.colors.neutrals[999],
+                borderColor: appConfig.theme.colors.primary[900],
                 borderRadius: '10px',
                 flex: 1,
                 minHeight: '240px',
@@ -154,7 +150,7 @@ export default function PaginaInicial() {
               <Text
                 variant="body4"
                 styleSheet={{
-                  color: appConfig.theme.colors.neutrals[200],
+                  color: appConfig.theme.colors.primary[200],
                   backgroundColor: appConfig.theme.colors.neutrals[900],
                   padding: '3px 10px',
                   borderRadius: '1000px'
